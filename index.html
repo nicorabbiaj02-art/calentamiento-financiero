@@ -340,7 +340,7 @@ Unirme al grupo de charlas gratuitas
 
 <script>
 const CONFIG = {
-  // Pegá acá la URL de la Web App de Google Apps Script (ver apps-script/Codigo.gs).
+  // URL de la Web App de Google Apps Script (apps-script/Codigo.gs) que guarda los mails en la planilla "LANDING CALENTAMIENTO".
   // Si queda vacía, las guías se desbloquean igual pero los mails no se guardan.
   SHEETS_ENDPOINT: "",
   EVENTO: "2026-11-29T19:00:00-03:00",
@@ -387,7 +387,8 @@ const CONFIG = {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = 'Revisá el mail, parece que tiene un error.'; return; }
     const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Enviando…';
     if (CONFIG.SHEETS_ENDPOINT) {
-      const body = new URLSearchParams({ email, origen: 'landing-calentamiento-financiero', fecha: new Date().toISOString() });
+      const dispositivo = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Celular' : 'Computadora';
+      const body = new URLSearchParams({ email, origen: 'Landing Calentamiento Financiero', dispositivo });
       try { await Promise.race([fetch(CONFIG.SHEETS_ENDPOINT, { method: 'POST', mode: 'no-cors', body }), new Promise(r => setTimeout(r, 5000))]); } catch(err) {}
     }
     try { localStorage.setItem('etf_guias_ok', '1'); } catch(e) {}
