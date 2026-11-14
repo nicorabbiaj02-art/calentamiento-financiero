@@ -264,13 +264,15 @@ Quiero entrar al grupo gratis
 <div style="flex: 1 1 400px; min-width: 0">
 <p style="color: #5aaccb; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; margin: 0 0 10px">Recurso gratuito</p>
 <h2 style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1.1; margin: 0 0 14px">Descargá nuestras guías para inversores</h2>
-<p style="color: #a9bfdc; margin: 0 0 26px">Vamos sumando <strong style="color: #eaf6ff">una guía nueva por semana</strong>. Dejá tu mail y desbloqueá la descarga.</p>
+<p style="color: #a9bfdc; margin: 0 0 26px">Vamos sumando <strong style="color: #eaf6ff">una guía nueva por semana</strong>. Dejá tus datos y desbloqueá la descarga.</p>
 <form id="guias-form" style="padding: 12px; border-radius: 20px; background: rgba(11,28,63,.85); border: 1px solid rgba(90,172,203,.3); box-shadow: 0 0 50px rgba(90,172,203,.1)">
-<label for="guias-email" style="display: block; font-size: 13px; color: #a9bfdc; padding: 4px 6px 8px">Tu email</label>
-<div style="display: flex; flex-wrap: wrap; gap: 10px">
-<input id="guias-email" name="email" type="email" required autocomplete="email" placeholder="tunombre@email.com" style="flex: 1 1 220px; min-width: 0; font: 500 16px Inter, sans-serif; color: #eaf6ff; background: #040b1d; border: 1px solid rgba(169,191,220,.3); border-radius: 14px; padding: 15px 16px; min-height: 52px; box-sizing: border-box">
-<button type="submit" class="cta" style="flex: 0 0 auto; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 15px; color: #03122b; background: #5aaccb; border: 0; cursor: pointer; padding: 15px 22px; border-radius: 14px; min-height: 52px; box-shadow: 0 0 0 1px rgba(255,255,255,.2) inset, 0 8px 26px rgba(90,172,203,.35)">Desbloquear guías</button>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 10px">
+<div><label for="guias-nombre" style="display: block; font-size: 13px; color: #a9bfdc; padding: 4px 6px 6px">Nombre y apellido</label>
+<input id="guias-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Juan Pérez" style="font: 500 16px Inter, sans-serif; color: #eaf6ff; background: #040b1d; border: 1px solid rgba(169,191,220,.3); border-radius: 14px; padding: 15px 16px; min-height: 52px; box-sizing: border-box; width: 100%"></div>
+<div><label for="guias-email" style="display: block; font-size: 13px; color: #a9bfdc; padding: 4px 6px 6px">Email</label>
+<input id="guias-email" name="email" type="email" required autocomplete="email" placeholder="tunombre@email.com" style="font: 500 16px Inter, sans-serif; color: #eaf6ff; background: #040b1d; border: 1px solid rgba(169,191,220,.3); border-radius: 14px; padding: 15px 16px; min-height: 52px; box-sizing: border-box; width: 100%"></div>
 </div>
+<button type="submit" class="cta" style="width: 100%; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 15px; color: #03122b; background: #5aaccb; border: 0; cursor: pointer; padding: 15px 22px; border-radius: 14px; min-height: 52px; box-shadow: 0 0 0 1px rgba(255,255,255,.2) inset, 0 8px 26px rgba(90,172,203,.35)">Desbloquear guías gratis</button>
 <p id="guias-msg" role="status" style="margin: 10px 6px 2px; font-size: 13px; color: #8aa3c4">Sin spam. Te avisamos cuando sale cada guía nueva.</p>
 </form>
 </div>
@@ -384,11 +386,12 @@ const CONFIG = {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = form.email.value.trim();
+    const nombre = form.nombre.value.trim();
+    if (nombre.length < 3) { msg.textContent = 'Escribí tu nombre y apellido.'; return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = 'Revisá el mail, parece que tiene un error.'; return; }
     const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Enviando…';
     if (CONFIG.SHEETS_ENDPOINT) {
-      const dispositivo = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Celular' : 'Computadora';
-      const body = new URLSearchParams({ email, origen: 'Landing Calentamiento Financiero', dispositivo });
+      const body = new URLSearchParams({ nombre, email });
       try { await Promise.race([fetch(CONFIG.SHEETS_ENDPOINT, { method: 'POST', mode: 'no-cors', body }), new Promise(r => setTimeout(r, 5000))]); } catch(err) {}
     }
     try { localStorage.setItem('etf_guias_ok', '1'); } catch(e) {}
