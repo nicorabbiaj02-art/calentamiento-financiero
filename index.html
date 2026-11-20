@@ -329,8 +329,14 @@ Quiero entrar al grupo gratis
 <span id="guia2-pronto" style="flex: none; font-size: 12px; font-weight: 700; color: #a9bfdc; text-transform: uppercase; letter-spacing: .06em">Disponible el 18/11</span>
 <a id="guia2-btn" class="guia-btn" href="assets/guias/guia-2-perfil-de-inversor.pdf" download aria-disabled="true" hidden style="flex: none; font-weight: 700; font-size: 14px; text-decoration: none; color: #5aaccb; border: 1px solid rgba(90,172,203,.5); border-radius: 12px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Descargar</a>
 </div>
+<div style="display: flex; align-items: center; gap: 16px; padding: 18px; border-radius: 16px; background: rgba(11,28,63,.55); border: 1px dashed rgba(90,172,203,.3)">
+<div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #5aaccb; border: 1px solid rgba(90,172,203,.45)">03</div>
+<div style="flex: 1; min-width: 0"><div style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: 16px">Conocé tus herramientas</div><div style="font-size: 13px; color: #a9bfdc">Qué instrumentos existen para armar tu cartera</div></div>
+<span id="guia3-pronto" style="flex: none; font-size: 12px; font-weight: 700; color: #a9bfdc; text-transform: uppercase; letter-spacing: .06em">Disponible el 24/11</span>
+<a id="guia3-btn" class="guia-btn" href="assets/guias/guia-3-herramientas-de-inversion.pdf" download aria-disabled="true" hidden style="flex: none; font-weight: 700; font-size: 14px; text-decoration: none; color: #5aaccb; border: 1px solid rgba(90,172,203,.5); border-radius: 12px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Descargar</a>
+</div>
 <div style="display: flex; align-items: center; gap: 16px; padding: 18px; border-radius: 16px; background: rgba(11,28,63,.4); border: 1px dashed rgba(90,172,203,.2)">
-<div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #8aa3c4; border: 1px solid rgba(90,172,203,.25)">03</div>
+<div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #8aa3c4; border: 1px solid rgba(90,172,203,.25)">04</div>
 <div style="flex: 1; min-width: 0"><div style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: 16px; color: #cfe0f5">Nueva guía</div><div style="font-size: 13px; color: #8aa3c4">Se suma una por semana</div></div>
 <span style="flex: none; font-size: 12px; font-weight: 700; color: #8aa3c4; text-transform: uppercase; letter-spacing: .06em">Próximamente</span>
 </div>
@@ -387,19 +393,20 @@ const CONFIG = {
   // Si queda vacía, las guías se desbloquean igual pero los mails no se guardan.
   SHEETS_ENDPOINT: "https://script.google.com/macros/s/AKfycbxJtAv3UPywRkW1_XRT7oBCbCvl-cPlI6doK2p6ewGaCN6mnll7PJGA0CZOretMPX3x/exec",
   EVENTO: "2026-11-29T19:00:00-03:00",
-  GUIA2_DESDE: "2026-11-18T00:00:00-03:00"
+  GUIA2_DESDE: "2026-11-18T00:00:00-03:00",
+  GUIA3_DESDE: "2026-11-24T00:00:00-03:00"
 };
 
-// Guía 2: se habilita el 18/11/2026 (hora Argentina)
-(function(){
-  if (Date.now() < new Date(CONFIG.GUIA2_DESDE).getTime()) return;
-  const btn = document.getElementById('guia2-btn');
-  document.getElementById('guia2-pronto').hidden = true;
+// Guías con fecha de publicación (hora Argentina)
+[['guia2', CONFIG.GUIA2_DESDE], ['guia3', CONFIG.GUIA3_DESDE]].forEach(([id, desde]) => {
+  if (Date.now() < new Date(desde).getTime()) return;
+  const btn = document.getElementById(id + '-btn');
+  document.getElementById(id + '-pronto').hidden = true;
   btn.hidden = false;
   const fila = btn.parentElement;
   fila.style.background = '#0b1c3f'; fila.style.border = '1px solid rgba(90,172,203,.4)';
   const num = fila.firstElementChild; num.style.background = '#5aaccb'; num.style.color = '#03122b';
-})();
+});
 
 // Cuenta regresiva
 (function(){
