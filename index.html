@@ -10,6 +10,7 @@
 <meta property="og:image" content="assets/hero.webp">
 <meta name="theme-color" content="#040b1d">
 <link rel="icon" type="image/webp" href="assets/logo.webp">
+<script defer src="/_vercel/insights/script.js"></script>
 <style>[hidden]{display:none !important} html{scroll-behavior:smooth} section[id]{scroll-margin-top:84px}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -344,7 +345,8 @@ Quiero entrar al grupo gratis
 <div style="display: flex; align-items: center; gap: 16px; padding: 18px; border-radius: 16px; background: linear-gradient(120deg, rgba(63,127,176,.35), rgba(11,28,63,.9) 70%); border: 2px solid #5aaccb; box-shadow: 0 0 28px rgba(90,172,203,.25)">
 <div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #03122b; background: #5aaccb">05</div>
 <div style="flex: 1; min-width: 0"><div style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: 16px">Guía 5 · Exclusiva del evento</div><div style="font-size: 13px; color: #cfe0f5">Se entrega solo en vivo, el domingo 29/11, a los que se queden hasta el final</div></div>
-<span style="flex: none; font-size: 12px; font-weight: 800; color: #03122b; background: #5aaccb; border-radius: 999px; padding: 6px 10px; text-transform: uppercase; letter-spacing: .06em">Solo en vivo</span>
+<span id="guia5-pronto" style="flex: none; font-size: 12px; font-weight: 800; color: #03122b; background: #5aaccb; border-radius: 999px; padding: 6px 10px; text-transform: uppercase; letter-spacing: .06em">Solo en vivo</span>
+<a id="guia5-btn" class="guia-btn" href="assets/guias/guia-5-analiza-antes-de-elegir-d9473a83.pdf" download aria-disabled="true" hidden style="flex: none; font-weight: 700; font-size: 14px; text-decoration: none; color: #5aaccb; border: 1px solid rgba(90,172,203,.5); border-radius: 12px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Descargar</a>
 </div>
 </div>
 </div>
@@ -401,12 +403,14 @@ const CONFIG = {
   EVENTO: "2026-11-29T19:00:00-03:00",
   GUIA2_DESDE: "2026-11-18T00:00:00-03:00",
   GUIA3_DESDE: "2026-11-23T00:00:00-03:00",
-  GUIA4_DESDE: "2026-11-24T12:00:00-03:00"
+  GUIA4_DESDE: "2026-11-24T12:00:00-03:00",
+  // Guía 5: vacía = no se publica en la landing. Se completa con la fecha y hora que confirmen el día del evento.
+  GUIA5_DESDE: ""
 };
 
 // Guías con fecha de publicación (hora Argentina)
-[['guia2', CONFIG.GUIA2_DESDE], ['guia3', CONFIG.GUIA3_DESDE], ['guia4', CONFIG.GUIA4_DESDE]].forEach(([id, desde]) => {
-  if (Date.now() < new Date(desde).getTime()) return;
+[['guia2', CONFIG.GUIA2_DESDE], ['guia3', CONFIG.GUIA3_DESDE], ['guia4', CONFIG.GUIA4_DESDE], ['guia5', CONFIG.GUIA5_DESDE]].forEach(([id, desde]) => {
+  if (!desde || Date.now() < new Date(desde).getTime()) return;
   const btn = document.getElementById(id + '-btn');
   document.getElementById(id + '-pronto').hidden = true;
   btn.hidden = false;
