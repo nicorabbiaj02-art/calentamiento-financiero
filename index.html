@@ -337,8 +337,9 @@ Quiero entrar al grupo gratis
 </div>
 <div style="display: flex; align-items: center; gap: 16px; padding: 18px; border-radius: 16px; background: rgba(11,28,63,.4); border: 1px dashed rgba(90,172,203,.2)">
 <div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #8aa3c4; border: 1px solid rgba(90,172,203,.25)">04</div>
-<div style="flex: 1; min-width: 0"><div style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: 16px; color: #cfe0f5">Nueva guía</div><div style="font-size: 13px; color: #8aa3c4">Se publica el martes 24/11</div></div>
-<span style="flex: none; font-size: 12px; font-weight: 700; color: #8aa3c4; text-transform: uppercase; letter-spacing: .06em">Disponible el 24/11</span>
+<div style="flex: 1; min-width: 0"><div style="font-family: Montserrat, sans-serif; font-weight: 800; font-size: 16px">Invertí con la cabeza fría</div><div style="font-size: 13px; color: #a9bfdc">Que tus emociones no rompan tu plan</div></div>
+<span id="guia4-pronto" style="flex: none; font-size: 12px; font-weight: 700; color: #8aa3c4; text-transform: uppercase; letter-spacing: .06em">Disponible el 24/11</span>
+<a id="guia4-btn" class="guia-btn" href="assets/guias/guia-4-invertir-con-la-cabeza-fria.pdf" download aria-disabled="true" hidden style="flex: none; font-weight: 700; font-size: 14px; text-decoration: none; color: #5aaccb; border: 1px solid rgba(90,172,203,.5); border-radius: 12px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Descargar</a>
 </div>
 <div style="display: flex; align-items: center; gap: 16px; padding: 18px; border-radius: 16px; background: linear-gradient(120deg, rgba(63,127,176,.35), rgba(11,28,63,.9) 70%); border: 2px solid #5aaccb; box-shadow: 0 0 28px rgba(90,172,203,.25)">
 <div style="flex: none; width: 46px; height: 58px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: Montserrat, sans-serif; font-weight: 900; color: #03122b; background: #5aaccb">05</div>
@@ -399,11 +400,12 @@ const CONFIG = {
   SHEETS_ENDPOINT: "https://script.google.com/macros/s/AKfycbxJtAv3UPywRkW1_XRT7oBCbCvl-cPlI6doK2p6ewGaCN6mnll7PJGA0CZOretMPX3x/exec",
   EVENTO: "2026-11-29T19:00:00-03:00",
   GUIA2_DESDE: "2026-11-18T00:00:00-03:00",
-  GUIA3_DESDE: "2026-11-23T00:00:00-03:00"
+  GUIA3_DESDE: "2026-11-23T00:00:00-03:00",
+  GUIA4_DESDE: "2026-11-24T12:00:00-03:00"
 };
 
 // Guías con fecha de publicación (hora Argentina)
-[['guia2', CONFIG.GUIA2_DESDE], ['guia3', CONFIG.GUIA3_DESDE]].forEach(([id, desde]) => {
+[['guia2', CONFIG.GUIA2_DESDE], ['guia3', CONFIG.GUIA3_DESDE], ['guia4', CONFIG.GUIA4_DESDE]].forEach(([id, desde]) => {
   if (Date.now() < new Date(desde).getTime()) return;
   const btn = document.getElementById(id + '-btn');
   document.getElementById(id + '-pronto').hidden = true;
